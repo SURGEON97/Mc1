@@ -25,7 +25,12 @@ struct DetailView: View {
     }
 }
 struct Home: View {
+    public let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+        @State private var selection = 0
+    let images = ["test5","test6","test7","test8","test5"]
+    
     var body: some View{
+        
         
         VStack(spacing: 200){
             
@@ -41,18 +46,33 @@ struct Home: View {
                 Image("test5")
                     .frame(width: 300, alignment: .leading)
                 
-                Image("test6")
-                    .frame(width: 300, alignment: .center)
+                TabView(selection : $selection){
+                    
+                    ForEach(0..<5){ i in
+                        Image("\(images[i])")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                    
+                    
+                }.tabViewStyle(PageTabViewStyle())
+                    .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+                    .onReceive(timer, perform: { _ in
+                        
+                        withAnimation{
+                            print("selection is",selection)
+                            selection = selection < 5 ? selection + 1 : 0
+                        }
+                    })
+                    .frame(width: 200, height: 200, alignment: .center)
             }
             .padding(.vertical, -180)
-            
-            //                Spacer().frame(height: -10)
             
             HStack(spacing: 50){
                 Image("test7")
                     .frame(width: 300, alignment: .leading)
                 
-                Image("test5")
+                Image("test6")
                     .frame(width: 300, alignment: .center)
                 
                 NavigationLink(destination: Home2()) {
@@ -60,9 +80,6 @@ struct Home: View {
                 }
             }
             .padding(.vertical, -10)
-            .navigationBarTitle("",displayMode: .inline)
-            .navigationBarHidden(true)
-            .navigationBarBackButtonHidden(true)
         }
     }
 }
@@ -92,11 +109,14 @@ struct Home2: View {
                 }
                 .padding(.vertical, -180)
                 
-//                Spacer().frame(height: -10)
                 
                 HStack(spacing: 50){
                     Image("test7")
                         .frame(width: 300, alignment: .leading)
+                    
+                    NavigationLink(destination: BlackScene()) {
+                        Text("Go BlackScene")
+                    }
                     
                     Image("test5")
                         .frame(width: 300, alignment: .center)
@@ -106,17 +126,17 @@ struct Home2: View {
                             showPopup.toggle()
                         }
                         
+                        
                     }
-    //                NavigationLink(destination: DetailView()) {
-    //                                    Text("Do Something")
-                    }
-                    
                 }
-                .padding(.vertical, -10)
-                .navigationBarTitle("",displayMode: .inline)
-                .navigationBarHidden(true)
-                .navigationBarBackButtonHidden(true)
+                
+            }
+            .padding(.vertical, -10)
+                
         }
+        .navigationBarTitle("",displayMode: .inline)
+        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
         .navigationViewStyle(StackNavigationViewStyle())
         .popupNavigationView(horizontalPadding: 40, show: $showPopup){
             
@@ -151,6 +171,24 @@ struct Home2: View {
         }
     }
 }
+
+struct BlackScene: View{
+    var body: some View{
+        
+        ZStack {
+            Color.black.ignoresSafeArea()
+            VStack{
+                Text("데키&CJ와 함께라면, ")
+                    .font(.system(size: 35))
+                    .foregroundColor(.white)
+                Text("Chapter 1.  야, 너두 코딩할 수 있어")
+                    .font(.system(size: 55))
+                    .foregroundColor(.white)
+            }
+        }
+    }
+}
+
 
 //            .frame(height: 5)
 //            Spacer().frame(height: 130)
