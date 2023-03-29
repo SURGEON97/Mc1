@@ -72,7 +72,7 @@ struct Home: View {
                 Image("test7")
                     .frame(width: 300, alignment: .leading)
                 
-                Image("test6")
+                Image("test9")
                     .frame(width: 300, alignment: .center)
                 
                 NavigationLink(destination: Home2()) {
