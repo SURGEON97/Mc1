@@ -69,10 +69,10 @@ struct Home: View {
             .padding(.vertical, -180)
             
             HStack(spacing: 50){
-                Image("test7")
+                Image("test10")
                     .frame(width: 300, alignment: .leading)
                 
-                Image("test9")
+                Image("test21")
                     .frame(width: 300, alignment: .center)
                 
                 NavigationLink(destination: Home2()) {
