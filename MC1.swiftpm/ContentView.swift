@@ -101,7 +101,7 @@ struct Home2: View {
                 .padding(.vertical, -60)
                 
                 HStack(spacing: 50){
-                    Image("test5")
+                    Image("test10")
                         .frame(width: 300, alignment: .leading)
                     
                     Image("test6")
